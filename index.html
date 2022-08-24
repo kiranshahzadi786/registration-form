@@ -1,0 +1,222 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<style> * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.main{
+    display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            
+            height: 100vh;
+            background-color: rgb(60, 66, 238)
+}
+
+form {
+
+padding: 10px;
+margin: 10px;
+}
+label {
+            font-size: 16px;
+            color: #0e0e0e;
+        }
+
+.inputs{
+    align-items: center;
+            display: flex;
+            border: 1px solid #111010;
+            width: 100%;
+            height: 41px;
+            border-radius: 25px;
+            flex: 1;
+            padding: 1rem;
+        }    
+            
+.button{
+    background-color: aqua;
+            /* border-radius: 5px; */
+            border: none;
+            outline: none;
+            height: 43px;
+            color: black;
+            padding: 20px;
+            
+}
+@media (max-width: 768px) {
+            .wrapper {
+                width: 55%;
+            }
+        }
+
+        @media only screen and (min-width: 320px) and (max-width: 479px) {
+            .wrapper {
+                width: 90%;
+            }
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</style>
+
+</head>
+
+
+
+<body>
+    <div class="main">
+        <h1>Registration form</h1>
+    <h2>Signup</h2>
+
+
+    <form onsubmit="signup(); return false ">
+
+        <label for="firstName">First Name</label>
+        <input class="inputs" type="text" id="firstName" required>
+        <br>
+
+        <label for="lastName">Last Name</label>
+        <input class="inputs" type="text" id="lastName" required>
+        <br>
+
+        <label for="email">Email</label>
+        <input class="inputs" type="email" id="email" required>
+        <br>
+
+        <label for="password">Password</label>
+        <input class="inputs" type="password" id="password" required>
+        <br>
+
+        <label for="confirmPassword">Confirm Password</label>
+        <input class="inputs" type="password" id="confirmPassword" required>
+        <br>
+
+        <input class="button" type="submit" value="Signup">
+    </form>
+    Already have an account? <a href="login.html" id="signin">LogIn</a>
+
+    <p id="message"></p>
+
+
+    <br>
+    <br>
+
+</div>
+    <script>
+
+        function signup() {
+
+            var firstName = document.getElementById('firstName').value;
+            var lastName = document.getElementById('lastName').value;
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+            var confirmPassword = document.getElementById('confirmPassword').value;
+
+            if (password !== confirmPassword) {
+                document.querySelector("#message").innerHTML = 'Passwords do not match, please try again';
+                return;
+            }
+
+            axios.post('https://signup-login11application.herokuapp.com/signup', {
+
+                firstName,
+                lastName,
+                email,
+                password,
+
+            })
+                .then(function (response) {
+                    console.log(response.data);
+                    document.querySelector("#message").innerHTML = response.data.message;
+                })
+                .catch(function (error) {
+                    console.log(error.response.data);
+                    document.querySelector("#message").innerHTML = error.response.data.message;
+                });
+        }
+
+
+      
+    </script>
+
+
+
+<!-- //1. UNIFORM RESOURSE:
+//==================================
+
+// GET       /user/:userID    to get single user
+// GET       /users           to get all users
+// POST      /user            to create single user
+// POST      /users           to create multiple user
+// PUT       /user:userID     to modify single user
+// PUT       /users           to modify multiple user
+// DELETE    /user:userID     to delete single user
+// DELETE    /users           to delete multipls user
+
+
+
+// GET       /post/:postID    to get single post
+// GET       /posts           to get all posts
+// POST      /post            to create single post
+// POST      /posts           to create multiple posts
+// PUT       /post/:postID    to modify single post
+// PUT       /posts           to modify multiple posts
+// DELETE    /post/:postID    to delete single post
+// DELETE    /posts           to delete multipls posts
+
+
+// GET       /group/:groupID    to get single group
+// GET       /groups            to get all groups
+// POST      /group             to create single group
+// POST      /groups            to create multiple groups
+// PUT       /group/:groupID    to modify single group
+// PUT       /groups            to modify multiple groups
+// DELETE    /group/:postID     to delete single group
+// DELETE    /groups            to delete multipls groups
+
+
+
+
+
+// don't use these
+// GET /get-user
+// POST /create-user
+
+// 2.CLIENT AND SERVER SHOULD BE SEPARATE
+// =================================
+
+// 3.STATE LESS
+// ==============================
+
+// 4.CACHEABLE
+// ===============================
+
+// 5.LAYERED SYSTEM -->
+
+
+
+
+
+
+
+</body>
+</html>

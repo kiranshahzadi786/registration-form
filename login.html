@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <style> * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    .main{
+        display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                
+                height: 100vh;
+                background-color: rgb(60, 66, 238)
+    }
+    
+    form {
+    
+    padding: 20px;
+    margin: 20px;
+    }
+    label {
+                font-size: 16px;
+                color: #0e0e0e;
+            }
+    
+    .inputs{
+        align-items: center;
+                display: flex;
+                border: 1px solid #111010;
+                width: 100%;
+                height: 41px;
+                border-radius: 25px;
+                flex: 1;
+                padding: 1rem;
+            }    
+                
+    .button{
+        background-color: aqua;
+                border-radius: 15px; 
+                border: none;
+                outline: none;
+                height: 43px;
+                color: black;
+                padding: 10px;
+                margin-top: 5px;
+                
+    }
+    @media (max-width: 768px) {
+            .wrapper {
+                width: 55%;
+            }
+        }
+
+        @media only screen and (min-width: 320px) and (max-width: 479px) {
+            .wrapper {
+                width: 90%;
+            }
+    
+        }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    </style>
+</head>
+<body>
+    <div class="main">
+    <h1>Login</h1>
+    
+    <form onsubmit="login(); return false ">
+
+        <label for="email">Email</label>
+        <input class="inputs" type="email" id="email" required>
+        <br>
+        <br>
+
+        <label for="password">Password</label>
+        <input class="inputs" type="password" id="password" required>
+        <br>
+       
+
+        <input class="button" type="submit" value="Login">
+    </form>
+
+
+    <div id="message"></div>
+
+
+    <div class="exist-acc">
+        Creat a new account? <a href="./index.html" id="signup">Sign Up</a>
+    </div>
+
+</div>
+</div>
+
+<script>
+
+
+document.addEventListener('DOMContentLoaded', function () {
+            const passwordEle = document.getElementById('password');
+            const toggleEle = document.getElementById('toggle');
+
+            toggleEle.addEventListener('click', function () {
+                const type = passwordEle.getAttribute('type');
+                passwordEle.setAttribute('type', type === 'password' ? 'text' : 'password');
+            });
+        });
+
+
+        function login() {
+            var email = document.getElementById('email').value;
+            var password = document.getElementById('password').value;
+
+            if (email == " " || password == "") {
+                document.querySelector("#message").innerHTML = 'Please, fill all input first.';
+                return;
+            }
+
+            axios.post('https://signup-login11application.herokuapp.com/login', {
+                email,
+                password,
+
+            })
+
+                .then(function (response) {
+                    console.log(response.data);
+                    document.querySelector("#message").innerHTML = response.data.message;
+                })
+                .catch(function (error) {
+                    console.log(error.response.data);
+                    document.querySelector("#message").innerHTML = error.response.data.message;
+                });
+
+
+        }
+
+</script>
+
+
+</body>
+</html>
